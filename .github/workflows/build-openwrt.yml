@@ -84,7 +84,7 @@ jobs:
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e $APP_CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $APP_CONFIG_FILE ] && mv $APP_CONFIG_FILE openwrt/.config
         [ -e $DEVICE_CONFIG_FILE ] && mv $DEVICE_CONFIG_FILE openwrt/target/linux/amlogic/meson8b/config-6.1
         [ -e $FRAMEWORK_CONFIG_FILE ] && mv $FRAMEWORK_CONFIG_FILE openwrt/target/linux/amlogic/config-6.1
         chmod +x $DIY_P2_SH
