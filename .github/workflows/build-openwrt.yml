@@ -20,7 +20,9 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
+  APP_CONFIG_FILE: config_app
+  FRAMEWORK_CONFIG_FILE: config_framework
+  DEVICE_CONFIG_FILE: config_device
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   GEN_BURN_IMG_SH: gen_burn_img.sh
@@ -82,7 +84,9 @@ jobs:
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $APP_CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $DEVICE_CONFIG_FILE ] && mv $DEVICE_CONFIG_FILE openwrt/target/linux/amlogic/meson8b/config-6.1
+        [ -e $FRAMEWORK_CONFIG_FILE ] && mv $FRAMEWORK_CONFIG_FILE openwrt/target/linux/amlogic/config-6.1
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
@@ -99,7 +103,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) LINUX_VERMAGIC:=8a93fb87f710a7b2d9b69ab4786f13a || make -j1 LINUX_VERMAGIC:=8a93fb87f710a7b2d9b69ab4786f13a || make -j1 V=s LINUX_VERMAGIC:=8a93fb87f710a7b2d9b69ab4786f13a
+        make -j$(nproc) LINUX_VERMAGIC:=hui || make -j1 LINUX_VERMAGIC:=hui || make -j1 V=s LINUX_VERMAGIC:=hui
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
