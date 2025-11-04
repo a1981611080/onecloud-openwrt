@@ -49,6 +49,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+    - name: Print Runner Info
+      run: |
+        echo "==== CPU Info ===="
+        lscpu
+        echo ""
+        echo "==== Memory Info ===="
+        free -h
+        echo ""
+        echo "==== Disk Info ===="
+        df -h
+        
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
