@@ -35,6 +35,18 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+
+    - name: Print Runner Info
+      run: |
+        echo "==== CPU Info ===="
+        lscpu
+        echo ""
+        echo "==== Memory Info ===="
+        free -h
+        echo ""
+        echo "==== Disk Info ===="
+        df -h
+        
     - name: 释放磁盘空间
       uses: jlumbroso/free-disk-space@main
       with:
@@ -49,16 +61,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: Print Runner Info
-      run: |
-        echo "==== CPU Info ===="
-        lscpu
-        echo ""
-        echo "==== Memory Info ===="
-        free -h
-        echo ""
-        echo "==== Disk Info ===="
-        df -h
+    
         
     - name: Initialization environment
       env:
